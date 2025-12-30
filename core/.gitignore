@@ -1,0 +1,6 @@
+!.gitignore
+.idea
+target
+build
+.gradle
+gradle-wrapper.jar

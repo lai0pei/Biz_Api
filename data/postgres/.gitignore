@@ -1,0 +1,3 @@
+# Except the .gitignore itself (so you can keep editing it)
+/*
+!.gitignore
