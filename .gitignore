@@ -1,5 +1,6 @@
 *.DS_Store
 .idea
 ./schema.sql
+*.log
 # Except the .gitignore itself (so you can keep editing it)
 !.gitignore

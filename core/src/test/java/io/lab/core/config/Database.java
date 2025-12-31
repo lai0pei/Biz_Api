@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.core.env.Environment;
 
 import javax.sql.DataSource;
+import java.util.Objects;
 
 @TestConfiguration(proxyBeanMethods = false)
 public class Database{
@@ -20,10 +21,10 @@ public class Database{
     @Primary
     public DataSource postgresDataSource() {
         return DataSourceBuilder.create()
-                .url(env.getProperty("app.test.datasource.url"))
+                .url(Objects.requireNonNull(env.getProperty("app.test.datasource.url")))
                 .username(env.getProperty("app.test.datasource.username"))
                 .password(env.getProperty("app.test.datasource.password"))
-                .driverClassName(env.getProperty("app.test.datasource.driver-class-name"))
+                .driverClassName(Objects.requireNonNull(env.getProperty("app.test.datasource.driver-class-name")))
                 .build();
     }
 

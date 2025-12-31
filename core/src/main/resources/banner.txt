@@ -1,0 +1,12 @@
+${AnsiColor.BLUE}
+   _____            _               ____            _
+  / ___/____  _____(_)___  ____ _  / __ )____  ____/ |_
+  \__ \/ __ \/ ___/ / __ \/ __ `/ / __  / __ \/ __  / __/
+ ___/ / /_/ / /  / / / / / /_/ / / /_/ / /_/ / /_/ / /_
+/____/ .___/_/  /_/_/ /_/\__, / /_____/\____/\____/\__/
+    /_/                 /____/
+${AnsiColor.CYAN}
+Application :: ${spring.application.name}
+Version     :: ${application.version}
+Spring Boot :: ${spring-boot.version}
+${AnsiColor.DEFAULT}

@@ -37,6 +37,9 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 
+    implementation("org.springframework.boot:spring-boot-autoconfigure")
+    implementation("org.springframework.boot:spring-boot-test-autoconfigure")
+
     implementation("org.springframework.boot:spring-boot-starter-webmvc")
     testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")
 
@@ -53,7 +56,7 @@ dependencies {
 
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-jackson2")
-    implementation("org.springframework.boot:spring-boot-test-autoconfigure")
+
 
     // 2. Third-Party Tools
     implementation("net.datafaker:datafaker:2.5.3")
@@ -62,7 +65,7 @@ dependencies {
     runtimeOnly("io.jsonwebtoken:jjwt-impl:0.13.0")
 
     // 3. Runtime & DB Drivers
-    runtimeOnly("org.postgresql:postgresql")
+    runtimeOnly("org.postgresql:postgresql:42.7.8")
     runtimeOnly("com.h2database:h2")
 
     // 4. Annotation Processors & Compilation Tools (Order Matters!)
@@ -77,6 +80,8 @@ dependencies {
     annotationProcessor("org.hibernate.orm:hibernate-processor")
 
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
 }
 
 
