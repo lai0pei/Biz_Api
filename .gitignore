@@ -4,3 +4,6 @@
 *.log
 # Except the .gitignore itself (so you can keep editing it)
 !.gitignore
+todo.txt
+tmp.txt
+drop.sql

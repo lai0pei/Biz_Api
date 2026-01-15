@@ -4,9 +4,13 @@
 
 plugins {
     java
+    id("application")
     id("org.springframework.boot") version "4.0.1"
     id("io.spring.dependency-management") version "1.1.7"
+    id("org.hibernate.tool.hibernate-tools-gradle") version "7.2.0.Final"
+    id("org.springdoc.openapi-gradle-plugin") version "1.9.0"
 }
+
 
 repositories {
     mavenLocal()
@@ -18,17 +22,6 @@ group = "io.lab"
 version = "0.0.1"
 description = "Common Modules"
 java.sourceCompatibility = JavaVersion.VERSION_21
-
-val mockitoAgent = configurations.create("mockitoAgent")
-dependencies {
-    testImplementation(libs.mockito)
-    mockitoAgent(libs.mockito) { isTransitive = false }
-}
-tasks {
-    test {
-        jvmArgs.add("-javaagent:${mockitoAgent.asPath}")
-    }
-}
 
 
 
@@ -54,9 +47,10 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-security")
     testImplementation("org.springframework.security:spring-security-test")
 
+    implementation("org.springframework.boot:spring-boot-data-redis")
+
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-jackson2")
-
 
     // 2. Third-Party Tools
     implementation("net.datafaker:datafaker:2.5.3")
@@ -64,13 +58,17 @@ dependencies {
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.13.0")
     runtimeOnly("io.jsonwebtoken:jjwt-impl:0.13.0")
 
+    implementation("org.mapstruct:mapstruct:1.6.3")
+    annotationProcessor("org.mapstruct:mapstruct-processor:1.6.3")
+    annotationProcessor("org.projectlombok:lombok-mapstruct-binding:0.2.0")
+
     // 3. Runtime & DB Drivers
     runtimeOnly("org.postgresql:postgresql:42.7.8")
     runtimeOnly("com.h2database:h2")
 
     // 4. Annotation Processors & Compilation Tools (Order Matters!)
-    compileOnly("org.projectlombok:lombok")
-    annotationProcessor("org.projectlombok:lombok")
+    compileOnly("org.projectlombok:lombok:1.18.42")
+    annotationProcessor("org.projectlombok:lombok:1.18.42")
 
     // Configuration processor moved to annotationProcessor
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
@@ -82,6 +80,10 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
     developmentOnly("org.springframework.boot:spring-boot-devtools")
+
+    // Doc
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-api:3.0.1")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:3.0.1")
 }
 
 
@@ -101,4 +103,3 @@ configurations {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
-
