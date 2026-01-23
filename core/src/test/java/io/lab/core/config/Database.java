@@ -22,7 +22,6 @@ public class Database {
 
     @Bean
     @Primary
-    @ConfigurationProperties("app.datasource")
     public DataSource dataSource(DataSourceProperties properties) {
      return properties.initializeDataSourceBuilder().build();
     }

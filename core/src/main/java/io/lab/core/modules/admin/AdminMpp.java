@@ -1,6 +1,7 @@
 package io.lab.core.modules.admin;
 
 import io.lab.core.modules.admin.dto.AdminDto;
+import io.lab.core.modules.admin.dto.projection.AdminDetailDto;
 import io.lab.core.modules.admin.dto.request.AdminCreateReq;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -20,4 +21,6 @@ public interface AdminMpp {
     @Mapping(target = "roleId", ignore = true)
     @Mapping(target = "nickname", ignore = true)
     AdminDto toAdmin(AdminMdl adminMdl);
+
+    AdminDetailDto toAdminDetail(AdminMdl adminMdl);
 }

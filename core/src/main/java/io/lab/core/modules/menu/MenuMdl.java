@@ -1,7 +1,12 @@
 package io.lab.core.modules.menu;
 
+import io.lab.core.modules.permission.PermMdl;
+import io.lab.core.modules.permission.PermMdl_;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "menu")
@@ -29,4 +34,7 @@ public class MenuMdl {
     @Column
     @Builder.Default
     private Integer sort = 0;
+
+    @OneToMany( mappedBy = PermMdl_.MENU , fetch = FetchType.LAZY)
+    private List<PermMdl> permMdl;
 }

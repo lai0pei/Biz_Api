@@ -2,7 +2,9 @@ package io.lab.core.modules.login.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
+import lombok.Builder;
 
+@Builder
 public record CredentialReq(
         @Schema(example = "admin" ,requiredMode = Schema.RequiredMode.REQUIRED)
         @NotBlank(message = "username is required")

@@ -6,6 +6,8 @@ import io.lab.core.modules.admin.dto.response.AdminSearchResp;
 import io.lab.core.modules.role.RoleMdl;
 import io.lab.core.config.Config;
 import io.lab.core.config.Database;
+import io.lab.core.modules.role.RoleRepo;
+import io.lab.core.modules.role.RoleSrv;
 import net.datafaker.Faker;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -40,6 +43,9 @@ public class AdminRepoTest {
     private AdminSrv adminSrv;
 
     @Autowired
+    private RoleRepo roleRepo;
+
+    @Autowired
     private Faker faker;
 
     @MockitoBean
@@ -53,10 +59,16 @@ public class AdminRepoTest {
         adminMdl.setPassword(this.faker.credentials().password());
         adminMdl.setSuperAdmin(false);
         adminMdl.setEnabled(true);
-        var role = RoleMdl.builder().id(1L).roleName("rom").build();
+        var role = roleRepo.findById(1L).get();
         adminMdl.setRole(role);
         adminMdl.setLastLoginTime(LocalDateTime.now());
         return adminMdl;
+    }
+
+    private void makeRole(){
+        RoleMdl role = new RoleMdl();
+        role.setRoleName("admin");
+        roleRepo.save(role);
     }
 
     @Test
@@ -65,7 +77,9 @@ public class AdminRepoTest {
     }
 
     @Test
+    @Transactional
     void createAdmin() throws Exception {
+        makeRole();
         AdminMdl res = adminRepo.save(makeAdmin());
         assertThat(res).isNotNull();
     }
@@ -94,16 +108,6 @@ public class AdminRepoTest {
         adminRepo.save(makeAdmin());
     }
 
-    @Test
-    void listAdmin() throws Exception {
-        var adminSearchReq = AdminSearchReq.builder()
-                .size(10)
-                .page(0)
-                .build();
-
-        Page<AdminSearchResp> res = adminSrv.listAllAdmin(adminSearchReq);
-        System.out.println(res.getContent());
-    }
 
     @Test
     void getRole() throws Exception {

@@ -62,6 +62,9 @@ dependencies {
     annotationProcessor("org.mapstruct:mapstruct-processor:1.6.3")
     annotationProcessor("org.projectlombok:lombok-mapstruct-binding:0.2.0")
 
+    //cache
+    implementation("io.lettuce:lettuce-core:7.2.1.RELEASE")
+
     // 3. Runtime & DB Drivers
     runtimeOnly("org.postgresql:postgresql:42.7.8")
     runtimeOnly("com.h2database:h2")

@@ -9,6 +9,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface LoginRepository extends JpaRepository<AdminMdl, UUID> {
+public interface LoginRepo extends JpaRepository<AdminMdl, UUID> {
     Optional<AdminMdl> findByUsernameAndPassword(String username, String password);
 }

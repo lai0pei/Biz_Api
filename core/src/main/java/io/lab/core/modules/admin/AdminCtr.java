@@ -7,7 +7,6 @@ import io.lab.core.modules.admin.dto.request.AdminSearchReq;
 import io.lab.core.modules.admin.dto.request.AdminUpdateReq;
 import io.lab.core.modules.admin.dto.response.AdminSearchResp;
 import io.lab.core.modules.exceptions.AppException;
-import io.lab.core.utils.PermAccess;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -21,8 +20,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.security.Permission;
 
 @Slf4j
 @RestController
@@ -44,9 +41,10 @@ public class AdminCtr {
         try {
             this.adminSrv.createAdmin(adminCreateReq);
         } catch (Exception e) {
+            log.error(e.getMessage());
             throw new AppException("Add failed");
         }
-
+        
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(SucRes.empty());
@@ -58,7 +56,8 @@ public class AdminCtr {
     public ResponseEntity<?> update(@Valid @RequestBody AdminUpdateReq adminUpdateReq) {
         try {
             this.adminSrv.updateAdmin(adminUpdateReq);
-        } catch (Exception ex) {
+        } catch (Exception e) {
+            log.error(e.getMessage());
             throw new AppException("Update failed");
         }
         return ResponseEntity
@@ -73,6 +72,7 @@ public class AdminCtr {
         try {
             this.adminSrv.deleteAdmin(adminDelete);
         } catch (Exception e) {
+            log.error(e.getMessage());
             throw new AppException("Delete failed");
         }
         return ResponseEntity

@@ -31,7 +31,7 @@ public class RoleUnitTest {
     ObjectMapper objectMapper;
 
     @Test
-    @WithMockUser
+    @WithMockUser(username = "adminH")
     public void addTest()  throws Exception{
         var n = new PermGrant(1L,Set.of(1L,2L,3L,4L));
 

@@ -8,6 +8,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 
@@ -35,7 +36,7 @@ public class RoleMdl {
             name="permission_grant",
             joinColumns = @JoinColumn(name="role_id"),
             inverseJoinColumns = @JoinColumn(name="perm_id"))
-    Set<PermMdl> permMdl;
+    List<PermMdl> permMdl;
 
     @CreationTimestamp
     @Builder.Default

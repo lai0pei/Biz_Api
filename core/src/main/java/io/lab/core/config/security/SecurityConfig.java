@@ -32,7 +32,7 @@ public class SecurityConfig {
             AuthEntryPoint authEntryPoint) throws Exception {
         httpSecurity.authorizeHttpRequests(auth -> auth
                 .requestMatchers("/ws/**").permitAll()
-                .requestMatchers("/modules/login/**").permitAll()
+                .requestMatchers("/modules/auth/**").permitAll()
                 .requestMatchers("/pub/**").permitAll()
                 .requestMatchers("/error").permitAll()
                 .requestMatchers("/swagger/**").permitAll()

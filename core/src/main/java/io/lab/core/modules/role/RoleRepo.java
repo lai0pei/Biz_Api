@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Repository
 public interface RoleRepo extends ExtRepo<RoleMdl, Long> {
-    Optional<RoleMdl> findByRoleName(String id);
+    Optional<RoleMdl> findByRoleName(String name);
 
     default Page<RoleSearchResp> searchRoleList(RoleSearchReq roleSearchReq, Pageable pageable) {
         Specification<RoleMdl> spec = RoleSpec.searchSpec(roleSearchReq);

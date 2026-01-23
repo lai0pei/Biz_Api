@@ -2,7 +2,6 @@ package io.lab.core.modules.login;
 
 import io.lab.core.modules.admin.AdminMdl;
 import io.lab.core.modules.admin.AdminSrv;
-import io.lab.core.modules.admin.dto.AdminDto;
 import io.lab.core.modules.login.dto.ClaimInfo;
 import io.lab.core.modules.exceptions.AppException;
 import lombok.extern.slf4j.Slf4j;
@@ -16,12 +15,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
-public class LoginService {
+public class LoginSrv {
 
     private final AuthenticationManager authenticationManager;
     private final AdminSrv adminSrv;
 
-    public LoginService(
+    public LoginSrv(
             AuthenticationManager authenticationManager,
             AdminSrv adminSrv) {
 

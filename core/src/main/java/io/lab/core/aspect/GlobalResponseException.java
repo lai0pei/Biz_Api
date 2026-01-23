@@ -38,21 +38,23 @@ public class GlobalResponseException {
     }
 
 
-//    @ExceptionHandler(Exception.class)
-//    public ResponseEntity<?> handleException(@NonNull Exception e, HttpServletRequest request){
-//
-//        var errorResponse = ErrRes.builder()
-//                .timestamp(LocalDateTime.now())
-//                .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
-//                .message(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase())
-//                .error(e.getMessage())
-//                .path(request.getRequestURI())
-//                .build();
-//
-//        return ResponseEntity
-//                .status(HttpStatus.INTERNAL_SERVER_ERROR)
-//                .body(errorResponse);
-//    }
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<?> handleException(@NonNull Exception e, HttpServletRequest request){
+
+        var errorResponse = ErrRes.builder()
+                .timestamp(LocalDateTime.now())
+                .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                .message(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase())
+                .error(e.getMessage())
+                .path(request.getRequestURI())
+                .build();
+
+        log.error(e.getMessage());
+
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(errorResponse);
+    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<?> handleValidationExceptions(MethodArgumentNotValidException ex, HttpServletRequest request) {

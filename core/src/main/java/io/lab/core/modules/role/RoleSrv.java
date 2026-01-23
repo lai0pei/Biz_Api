@@ -8,13 +8,19 @@ import io.lab.core.modules.role.dto.request.*;
 import io.lab.core.modules.role.dto.response.RolePermResp;
 import io.lab.core.modules.role.dto.response.RoleSearchResp;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,6 +30,7 @@ public class RoleSrv {
     private final RoleRepo roleRepo;
     private final RoleMpp roleMpp;
     private final PermRepo permRepo;
+    private final static String ROLE_CACHE_NAME = "role";
 
     public RoleSrv(RoleRepo roleRepo, RoleMpp roleMpp, PermRepo permRepo) {
         this.roleRepo = roleRepo;
@@ -40,14 +47,27 @@ public class RoleSrv {
     }
 
     @Transactional
+    @CacheEvict(value = ROLE_CACHE_NAME, key="#roleUpdateReq.id")
     public void updateRole(RoleUpdateReq roleUpdateReq) {
         RoleMdl role = this.roleRepo.findById(roleUpdateReq.id()).orElseThrow(() -> new AppException("not exists"));
         role.setRoleName(roleUpdateReq.roleName());
         role.setEnabled(roleUpdateReq.enabled());
     }
 
+    @Transactional
+    @CacheEvict(value = ROLE_CACHE_NAME, key="#roleDeleteReq.id")
     public void deleteRole(RoleDeleteReq roleDeleteReq) {
         this.roleRepo.deleteById(roleDeleteReq.id());
+    }
+
+    @Transactional(readOnly = true)
+    @Cacheable(value = ROLE_CACHE_NAME, key="#id")
+    public Collection<? extends GrantedAuthority> getAuthoritiesByRoleId(Long id) {
+        RoleMdl role = this.roleRepo.findById(id).orElseThrow(() -> new AppException("not exists"));
+        return role.getPermMdl()
+                .stream()
+                .map(permMdl -> new SimpleGrantedAuthority(permMdl.getPermission_type().toString()))
+                .toList();
     }
 
     public Page<RoleSearchResp> listRole(RoleSearchReq roleSearchReq) {

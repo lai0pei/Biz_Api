@@ -16,6 +16,7 @@ import java.util.Objects;
 @Slf4j
 public class PermissionCheck {
     public boolean check(@Nullable String permission) {
+        log.info("Passed permission: {}", permission);
         if(permission == null){
             log.error("Permission check is null");
             return false;

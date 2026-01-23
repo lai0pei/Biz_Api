@@ -19,11 +19,11 @@ import javax.crypto.SecretKey;
 
 @Component
 @Slf4j
-public class OauthService {
+public class OauthSrv {
 
     private final JwtProperties jwtProperties;
 
-    public OauthService(JwtProperties jwtProperties) {
+    public OauthSrv(JwtProperties jwtProperties) {
         this.jwtProperties = jwtProperties;
     }
 

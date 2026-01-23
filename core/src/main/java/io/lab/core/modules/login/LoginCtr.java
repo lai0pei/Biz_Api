@@ -13,14 +13,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/modules/login")
+@RequestMapping("/modules/auth")
 @Tag(name = "User Login")
-public class LoginController {
+public class LoginCtr {
 
-    private final OauthService oauthService;
-    private final LoginService service;
-    public LoginController(LoginService service, OauthService oauthService) {
-        this.oauthService = oauthService;
+    private final OauthSrv oauthSrv;
+    private final LoginSrv service;
+    public LoginCtr(LoginSrv service, OauthSrv oauthSrv) {
+        this.oauthSrv = oauthSrv;
         this.service = service;
     }
 
@@ -32,8 +32,8 @@ public class LoginController {
                 credentialReq.password());
 
         TokenResp tokenResp = new TokenResp(
-                oauthService.createAccessToken(credential.id(), credential.username()),
-                oauthService.createRefreshToken(credential.id(), credential.username())
+                oauthSrv.createAccessToken(credential.id(), credential.username()),
+                oauthSrv.createRefreshToken(credential.id(), credential.username())
         );
 
 
